@@ -1,8 +1,9 @@
 {
   "name": "@dtc-innovation/credit-coop-statements",
   "version": "1.0.0",
-  "description": "Téléchargement des relevés bancaires mensuels, sans cliquer.",
+  "description": "Téléchargement des relevés bancaires mensuels en CSV, sans cliquer.",
   "main": "index.js",
+  "bin": "./bin/download.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,8 +18,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "csv-streamify": "^3.0.4",
-    "esm": "^3.0.7",
     "puppeteer": "^1.1.1"
   }
 }
