@@ -1,6 +1,6 @@
-import puppeteer from 'puppeteer';
+const puppeteer = require('puppeteer');
 
-export const download = async ({ username, password, accountId }) => {
+module.exports.download = async ({ username, password, accountId }) => {
   const browser = await puppeteer.launch({
     dumpio: false,
     ignoreHTTPSErrors: false,
@@ -8,8 +8,11 @@ export const download = async ({ username, password, accountId }) => {
   });
   const page = await browser.newPage();
 
-  page.on('request', async req => {
-    console.log(req.resourceType(), req.url());
+  browser.on('targetcreated', async target => {
+    console.log(target.url());
+  });
+  browser.on('targetchanged', async target => {
+    console.log(target.url());
   });
 
   await page.goto('https://www.coopanet.com/banque/sso/?csite=C');
@@ -36,11 +39,20 @@ export const download = async ({ username, password, accountId }) => {
     page.waitForNavigation(),
   ]);
 
-  // confirm page
-  const [resp] = await Promise.all([
-    page.waitForNavigation({ waitUntil: 'networkidle0' }),
-    page.click('form[name="telechargementForm"] input[name="btConfirmer"]'),
-  ]);
+  // download confirm page
+  const result = await page.evaluate(async () => {
+    const form = document.querySelector('form[name="telechargementForm"]');
+    const data = new FormData(form);
+    data.append('btConfirmer', 'Confirmer');
 
-  return '';
+    return fetch(form.action, {
+      method: 'POST',
+      credentials: 'include',
+      body: data,
+    })
+    .then(response => response.text());
+  });
+
+  // CSV data as plain text
+  return result;
 }

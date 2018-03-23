@@ -1,4 +1,6 @@
-import { download } from '../index';
+#!/usr/bin/env node
+
+const { download } = require('../index');
 
 const {BANK_USERNAME:username, BANK_PASSWORD:password, BANK_ACCOUNT_ID:accountId} = process.env;
 
