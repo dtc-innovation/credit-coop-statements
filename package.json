@@ -1,7 +1,7 @@
 {
   "name": "@dtc-innovation/credit-coop-statements",
   "version": "1.0.0",
-  "description": "Téléchargement des relevés bancaires mensuels en CSV, sans cliquer.",
+  "description": "Téléchargement des relevés bancaires Coop@net associations et entreprises en CSV, sans cliquer.",
   "main": "index.js",
   "bin": "./bin/download.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "esm": "^3.0.8",
-    "puppeteer": "^1.1.1"
+    "minimist": "^1.2.0",
+    "puppeteer": "^1.2.0"
   }
 }

@@ -1,10 +1,21 @@
 #!/usr/bin/env node
 
-const { download } = require('../index');
+const {download} = require('../index');
+const {argv} = process;
+const {username, 'account-id':accountId} = require('minimist')(argv);
+const {BANK_PASSWORD:password}= process.env;
 
-const {BANK_USERNAME:username, BANK_PASSWORD:password, BANK_ACCOUNT_ID:accountId} = process.env;
+console.log('%s (pwd %s, accnt id %s)',
+  username,
+  password ? '✔' : '✘',
+  accountId ? '✔' : '✘',
+);
 
-console.log('%s (pwd length %d)', username, password.length)
+if (!username || !password || !accountId) {
+  console.error('One of username, password or account id is missing.');
+  console.error('@see https://git.io/vx4aC for instructions.')
+  process.exit(1);
+}
 
 download({ username, password, accountId })
   .then(statement => process.stdout.write(statement))

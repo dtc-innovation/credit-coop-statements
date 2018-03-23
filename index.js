@@ -33,6 +33,7 @@ module.exports.download = async ({ username, password, accountId }) => {
   // download page
   await page.goto('https://www.coopanet.com/banque/cpt/cpt/navigation.do?navigation=3');
 
+  // value="5" means "CSV riche"
   await page.click('form[name="selectionTelechargementForm"] input[value="5"]');
   await Promise.all([
     page.click('form[name="selectionTelechargementForm"] [name="btValider"]'),
